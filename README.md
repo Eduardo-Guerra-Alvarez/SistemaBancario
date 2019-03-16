@@ -1,12 +1,13 @@
-#ARCHIVOS
+#Sistema Bancario
 
-Programa de Java hecho con archivos.
-Para Agregar, buscar, modificar y eliminar un registro.
-Con DataOutputStream y DataInputStream
+Programa que cuenta con un login para identificar un gerente y un cajero.
+En donde el gerente podra hacer un CRUD con usuarios, clientes y cuentas.
+El cajero solo podra hacer CRUD con clientes y cuentas
+Los ID de usuarios, clientes y cuentas son autoincrementables.
+
 
 #Nota
-EL archivo se debe de crear por separado.
-La extencion que tiene puede ser modificada para uso personal para que pueda funcionar
+La ruta de los artchivos txt remonta a una memoria USB
 
 #Autor
 Eduardo Guerra Alvarez
