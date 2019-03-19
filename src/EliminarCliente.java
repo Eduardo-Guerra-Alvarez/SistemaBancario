@@ -36,6 +36,9 @@ public class EliminarCliente extends javax.swing.JFrame {
                 cli.setSaldo_actual(fileIn.readDouble());
                 cli.setContrato(fileIn.readInt());
                 cli.setTipo_cuenta(fileIn.readUTF());
+                cli.setDiaM(fileIn.readInt());
+                cli.setMesM(fileIn.readInt());
+                cli.setAnioM(fileIn.readInt());
                 
                 lista.add(cli);
             }
@@ -61,6 +64,9 @@ public class EliminarCliente extends javax.swing.JFrame {
             fileOut.writeDouble(temp.getSaldo_actual());
             fileOut.writeInt(temp.getContrato());
             fileOut.writeUTF(temp.getTipo_cuenta());
+            fileOut.writeInt(temp.getDiaM());
+            fileOut.writeInt(temp.getMesM());
+            fileOut.writeInt(temp.getAnioM());
 
         }
         fileOut.close();

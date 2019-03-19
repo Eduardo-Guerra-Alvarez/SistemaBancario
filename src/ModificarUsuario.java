@@ -40,10 +40,10 @@ public class ModificarUsuario extends javax.swing.JFrame {
                 txtApellidosMod.setText(u.getApellido());
                 txtDireccionMod.setText(u.getDireccion());
                 txtTelefonoMod.setText(String.valueOf(String.format("%.0f",u.getTelefono())));
-                txtCargoMod.setText(u.getCargo_bancario());
+                cboCargo.setSelectedItem(u.getCargo_bancario());
                 txtCiudadMod.setText(u.getCiudad());
                 txtEstadoMod.setText(u.getEstado());
-                txtPaisMod.setText(u.getPais());
+                cboPais.setSelectedItem(u.getPais());
                 txtSexoMod.setText(u.getSexo());
                 encontrado = true;
             }
@@ -80,13 +80,12 @@ public class ModificarUsuario extends javax.swing.JFrame {
                 temp.setApellido(txtApellidosMod.getText());
                 temp.setDireccion(txtDireccionMod.getText());
                 temp.setTelefono(Double.parseDouble(txtTelefonoMod.getText()));
-                temp.setCargo_bancario(txtCargoMod.getText());
+                temp.setCargo_bancario(cboCargo.getSelectedItem().toString());
                 temp.setCiudad(txtCiudadMod.getText());
                 temp.setEstado(txtEstadoMod.getText());
-                temp.setPais(txtPaisMod.getText());
+                temp.setPais(cboPais.getSelectedItem().toString());
                 temp.setSexo(txtSexoMod.getText());
                 encontrado = true;
-                JOptionPane.showMessageDialog(null, "Modificado con exito");
             }
         }
         if (encontrado == true) {
@@ -133,15 +132,15 @@ public class ModificarUsuario extends javax.swing.JFrame {
         jLabel20 = new javax.swing.JLabel();
         txtDireccionMod = new javax.swing.JTextField();
         txtTelefonoMod = new javax.swing.JTextField();
-        txtCargoMod = new javax.swing.JTextField();
         btnEditar = new javax.swing.JButton();
         jLabel17 = new javax.swing.JLabel();
         txtEstadoMod = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
-        txtPaisMod = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
         txtSexoMod = new javax.swing.JTextField();
         btnRegresar = new javax.swing.JButton();
+        cboCargo = new javax.swing.JComboBox<>();
+        cboPais = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -186,6 +185,10 @@ public class ModificarUsuario extends javax.swing.JFrame {
                 btnRegresarActionPerformed(evt);
             }
         });
+
+        cboCargo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Gerente", "Cajero" }));
+
+        cboPais.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mexico", "EEUU", "España", "Colombia", "Canada", "Inglaterra" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -232,15 +235,15 @@ public class ModificarUsuario extends javax.swing.JFrame {
                                 .addComponent(jLabel17)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtPaisMod, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtEstadoMod, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtSexoMod, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtSexoMod, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cboPais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(18, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addComponent(jLabel20)
-                .addGap(12, 12, 12)
-                .addComponent(txtCargoMod, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cboCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnEditar)
                 .addGap(65, 65, 65))
@@ -275,12 +278,12 @@ public class ModificarUsuario extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(4, 4, 4)
                         .addComponent(jLabel13)))
-                .addGap(18, 18, 18)
+                .addGap(13, 13, 13)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtDireccionMod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtPaisMod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel19))
+                        .addComponent(jLabel19)
+                        .addComponent(cboPais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(4, 4, 4)
                         .addComponent(jLabel14)))
@@ -295,9 +298,9 @@ public class ModificarUsuario extends javax.swing.JFrame {
                         .addComponent(jLabel15)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtCargoMod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel20)
-                    .addComponent(btnEditar))
+                    .addComponent(btnEditar)
+                    .addComponent(cboCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btnRegresar)
                 .addContainerGap())
@@ -385,6 +388,8 @@ public class ModificarUsuario extends javax.swing.JFrame {
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnRegresar;
+    private javax.swing.JComboBox<String> cboCargo;
+    private javax.swing.JComboBox<String> cboPais;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -396,13 +401,11 @@ public class ModificarUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JTextField txtApellidosMod;
-    private javax.swing.JTextField txtCargoMod;
     private javax.swing.JTextField txtCiudadMod;
     private javax.swing.JTextField txtDireccionMod;
     private javax.swing.JTextField txtEstadoMod;
     private javax.swing.JTextField txtIDMod;
     private javax.swing.JTextField txtNombreMod;
-    private javax.swing.JTextField txtPaisMod;
     private javax.swing.JTextField txtSexoMod;
     private javax.swing.JTextField txtTelefonoMod;
     // End of variables declaration//GEN-END:variables

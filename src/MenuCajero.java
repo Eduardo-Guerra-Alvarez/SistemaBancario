@@ -27,6 +27,7 @@ public class MenuCajero extends javax.swing.JFrame {
         btnMostrarCu = new javax.swing.JButton();
         btnMoviminento = new javax.swing.JButton();
         btnBuscarCu = new javax.swing.JButton();
+        btnConsultas = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -118,6 +119,18 @@ public class MenuCajero extends javax.swing.JFrame {
         });
 
         btnBuscarCu.setText("Buscar Cuenta");
+        btnBuscarCu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarCuActionPerformed(evt);
+            }
+        });
+
+        btnConsultas.setText("Consultas");
+        btnConsultas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultasActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -128,7 +141,8 @@ public class MenuCajero extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnBuscarCu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnMoviminento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnMostrarCu, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE))
+                    .addComponent(btnMostrarCu, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+                    .addComponent(btnConsultas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -140,6 +154,8 @@ public class MenuCajero extends javax.swing.JFrame {
                 .addComponent(btnMoviminento)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBuscarCu)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnConsultas)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -280,6 +296,20 @@ public class MenuCajero extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_btnMoviminentoActionPerformed
 
+    private void btnBuscarCuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarCuActionPerformed
+        BuscarCuenta bc = new BuscarCuenta();
+        bc.setVisible(true);
+        bc.CargoBan(0);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnBuscarCuActionPerformed
+
+    private void btnConsultasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultasActionPerformed
+        ConsultaCuenta cc = new ConsultaCuenta();
+        cc.setVisible(true);
+        cc.CargoBan(0);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnConsultasActionPerformed
+
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -292,6 +322,7 @@ public class MenuCajero extends javax.swing.JFrame {
     private javax.swing.JButton btnAgregarCli;
     private javax.swing.JButton btnBuscarCli;
     private javax.swing.JButton btnBuscarCu;
+    private javax.swing.JButton btnConsultas;
     private javax.swing.JButton btnEliminarCli;
     private javax.swing.JButton btnModificarCli;
     private javax.swing.JButton btnMostrarCli;

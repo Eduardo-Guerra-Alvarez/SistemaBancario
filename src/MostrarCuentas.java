@@ -38,6 +38,9 @@ public class MostrarCuentas extends javax.swing.JFrame {
                 c.setSaldo_actual(fileIn.readDouble());
                 c.setContrato(fileIn.readInt());
                 c.setTipo_cuenta(fileIn.readUTF());
+                c.setDiaM(fileIn.readInt());
+                c.setMesM(fileIn.readInt());
+                c.setAnioM(fileIn.readInt());
                 lista.add(c);
             }
         }catch(IOException ex){
@@ -69,6 +72,7 @@ public class MostrarCuentas extends javax.swing.JFrame {
         btnRegresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         tlbMostrar.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -95,11 +99,11 @@ public class MostrarCuentas extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(521, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1090, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(488, 488, 488)
                 .addComponent(btnRegresar)
-                .addGap(486, 486, 486))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

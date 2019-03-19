@@ -50,37 +50,41 @@ public class AgregarUsuario extends javax.swing.JFrame {
     }
     public void Agregar() throws FileNotFoundException, IOException{
         fileOut = new DataOutputStream(new FileOutputStream("d:/txt/usuario.txt",true));
-        u.setIdUsuario(u.getIdUsuario()+1);
-        u.setNombre(txtNombre.getText());
-        u.setApellido(txtApellidos.getText());
-        u.setDireccion(txtDireccion.getText());
-        u.setTelefono(Double.parseDouble(txtTelefono.getText()));
-        u.setCargo_bancario(cboCargo.getSelectedItem().toString());
-        u.setCiudad(txtCiudad.getText());
-        u.setEstado(txtEstado.getText());
-        u.setPais(txtPais.getText());
-        if(optM.isSelected()){
-            u.setSexo("M");
+        if (txtNombre.getText().equals("") || txtApellidos.getText().equals("") || txtDireccion.getText().equals("")
+                || txtCiudad.getText().equals("") || txtEstado.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Campos vacios","ERROR",JOptionPane.ERROR_MESSAGE);
+        } else {
+            u.setIdUsuario(u.getIdUsuario()+1);
+            u.setNombre(txtNombre.getText());
+            u.setApellido(txtApellidos.getText());
+            u.setDireccion(txtDireccion.getText());
+            u.setTelefono(Double.parseDouble(txtTelefono.getText()));
+            u.setCargo_bancario(cboCargo.getSelectedItem().toString());
+            u.setCiudad(txtCiudad.getText());
+            u.setEstado(txtEstado.getText());
+            u.setPais(cboPais.getSelectedItem().toString());
+            if(optM.isSelected()){
+                u.setSexo("M");
+            }
+            else if(optF.isSelected()){
+                u.setSexo("F");
+            }
+            fileOut.writeDouble(u.getIdUsuario());
+            fileOut.writeUTF(u.getNombre());
+            fileOut.writeUTF(u.getApellido());
+            fileOut.writeUTF(u.getDireccion());
+            fileOut.writeDouble(u.getTelefono());
+            fileOut.writeUTF(u.getCargo_bancario());
+            fileOut.writeUTF(u.getCiudad());
+            fileOut.writeUTF(u.getEstado());
+            fileOut.writeUTF(u.getPais());
+            fileOut.writeUTF(u.getSexo());
+            fileOut.close();
+            JOptionPane.showMessageDialog(null, "Agregado con exito");
+            MenuGerente mg = new MenuGerente();
+            mg.setVisible(true);
+            this.setVisible(false);
         }
-        else if(optF.isSelected()){
-            u.setSexo("F");
-        }
-        fileOut.writeDouble(u.getIdUsuario());
-        fileOut.writeUTF(u.getNombre());
-        fileOut.writeUTF(u.getApellido());
-        fileOut.writeUTF(u.getDireccion());
-        fileOut.writeDouble(u.getTelefono());
-        fileOut.writeUTF(u.getCargo_bancario());
-        fileOut.writeUTF(u.getCiudad());
-        fileOut.writeUTF(u.getEstado());
-        fileOut.writeUTF(u.getPais());
-        fileOut.writeUTF(u.getSexo());
-        fileOut.close();
-        JOptionPane.showMessageDialog(null, "Agregado con exito");
-        MenuGerente mg = new MenuGerente();
-        mg.setVisible(true);
-        this.setVisible(false);
-        
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -103,13 +107,13 @@ public class AgregarUsuario extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         txtEstado = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        txtPais = new javax.swing.JTextField();
         jPanel7 = new javax.swing.JPanel();
         optM = new javax.swing.JRadioButton();
         optF = new javax.swing.JRadioButton();
         btnAgregar = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
         txtID = new javax.swing.JLabel();
+        cboPais = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -179,6 +183,8 @@ public class AgregarUsuario extends javax.swing.JFrame {
 
         txtID.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        cboPais.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mexico", "EEUU", "España", "Colombia", "Canada", "Inglaterra" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -191,51 +197,53 @@ public class AgregarUsuario extends javax.swing.JFrame {
                         .addGap(12, 12, 12)
                         .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addComponent(jLabel2)
-                        .addGap(12, 12, 12)
-                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel7)
-                        .addGap(6, 6, 6)
-                        .addComponent(txtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(jLabel3)
-                        .addGap(12, 12, 12)
-                        .addComponent(txtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
-                        .addComponent(jLabel9)
-                        .addGap(6, 6, 6)
-                        .addComponent(txtPais, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(12, 12, 12)
-                                .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(5, 5, 5)
-                                .addComponent(jLabel5)
-                                .addGap(12, 12, 12)
-                                .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(4, 4, 4)
-                                .addComponent(jLabel10)
-                                .addGap(19, 19, 19)
-                                .addComponent(cboCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(63, 63, 63)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnAgregar)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(170, 170, 170)
-                        .addComponent(btnRegresar)))
+                        .addComponent(jLabel6))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(15, 15, 15)
+                            .addComponent(jLabel2)
+                            .addGap(12, 12, 12)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(jLabel7)
+                            .addGap(6, 6, 6)
+                            .addComponent(txtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(8, 8, 8)
+                            .addComponent(jLabel3)
+                            .addGap(12, 12, 12)
+                            .addComponent(txtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(32, 32, 32)
+                            .addComponent(jLabel9)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(cboPais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(6, 6, 6)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel4)
+                                    .addGap(12, 12, 12)
+                                    .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(5, 5, 5)
+                                    .addComponent(jLabel5)
+                                    .addGap(12, 12, 12)
+                                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(4, 4, 4)
+                                    .addComponent(jLabel10)
+                                    .addGap(19, 19, 19)
+                                    .addComponent(cboCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGap(63, 63, 63)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnAgregar)))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(170, 170, 170)
+                            .addComponent(btnRegresar))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(txtCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -263,13 +271,14 @@ public class AgregarUsuario extends javax.swing.JFrame {
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtPais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(4, 4, 4)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
-                            .addComponent(jLabel9))))
-                .addGap(6, 6, 6)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel9)
+                                .addComponent(cboPais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(5, 5, 5)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -296,7 +305,7 @@ public class AgregarUsuario extends javax.swing.JFrame {
                         .addComponent(btnAgregar)))
                 .addGap(6, 6, 6)
                 .addComponent(btnRegresar)
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         pack();
@@ -368,6 +377,7 @@ public class AgregarUsuario extends javax.swing.JFrame {
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JComboBox<String> cboCargo;
+    private javax.swing.JComboBox<String> cboPais;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -387,7 +397,6 @@ public class AgregarUsuario extends javax.swing.JFrame {
     private javax.swing.JTextField txtEstado;
     private javax.swing.JLabel txtID;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtPais;
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
 

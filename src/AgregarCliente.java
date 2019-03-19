@@ -50,37 +50,43 @@ public class AgregarCliente extends javax.swing.JFrame {
     }
     public void Agregar() throws FileNotFoundException, IOException{
         fileOut = new DataOutputStream(new FileOutputStream("d:/txt/cliente.txt",true));
-        c.setIdCliente(c.getIdCliente()+1);
-        c.setNombre(txtNombre.getText());
-        c.setApellido(txtApellidos.getText());
-        c.setDireccion(txtDireccion.getText());
-        c.setTelefono(Double.parseDouble(txtTelefono.getText()));
-        c.setTipo_cliente(cboTipo.getSelectedItem().toString());
-        c.setCiudad(txtCiudad.getText());
-        c.setEstado(txtEstado.getText());
-        c.setPais(cboPais.getSelectedItem().toString());
-        if (optM.isSelected()) {
-            c.setSexo("M");
+        if (txtNombre.getText().equals("") || txtApellidos.getText().equals("") || txtDireccion.getText().equals("")
+                || txtCiudad.getText().equals("") || txtEstado.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Campos vacios","ERROR",JOptionPane.ERROR_MESSAGE);
+        } else {
+            c.setIdCliente(c.getIdCliente()+1);
+            c.setNombre(txtNombre.getText());
+            c.setApellido(txtApellidos.getText());
+            c.setDireccion(txtDireccion.getText());
+            c.setTelefono(Double.parseDouble(txtTelefono.getText()));
+            c.setTipo_cliente(cboTipo.getSelectedItem().toString());
+            c.setCiudad(txtCiudad.getText());
+            c.setEstado(txtEstado.getText());
+            c.setPais(cboPais.getSelectedItem().toString());
+            if (optM.isSelected()) {
+                c.setSexo("M");
+            }
+            else if (optF.isSelected()) {
+                c.setSexo("F");
+            }
+            fileOut.writeDouble(c.getIdCliente());
+            fileOut.writeUTF(c.getNombre());
+            fileOut.writeUTF(c.getApellido());
+            fileOut.writeUTF(c.getDireccion());
+            fileOut.writeDouble(c.getTelefono());
+            fileOut.writeUTF(c.getTipo_cliente());
+            fileOut.writeUTF(c.getCiudad());
+            fileOut.writeUTF(c.getEstado());
+            fileOut.writeUTF(c.getPais());
+            fileOut.writeUTF(c.getSexo());
+            fileOut.close();
+            AgregarCuenta ac = new AgregarCuenta();
+            ac.txtIDc.setText(String.valueOf(String.format("%.0f",c.getIdCliente())));
+            ac.CargoBan(this.getCargo());
+            ac.setVisible(true);
+            this.setVisible(false);
         }
-        else if (optF.isSelected()) {
-            c.setSexo("F");
-        }
-        fileOut.writeDouble(c.getIdCliente());
-        fileOut.writeUTF(c.getNombre());
-        fileOut.writeUTF(c.getApellido());
-        fileOut.writeUTF(c.getDireccion());
-        fileOut.writeDouble(c.getTelefono());
-        fileOut.writeUTF(c.getTipo_cliente());
-        fileOut.writeUTF(c.getCiudad());
-        fileOut.writeUTF(c.getEstado());
-        fileOut.writeUTF(c.getPais());
-        fileOut.writeUTF(c.getSexo());
-        fileOut.close();
-        AgregarCuenta ac = new AgregarCuenta();
-        ac.txtIDc.setText(String.valueOf(String.format("%.0f",c.getIdCliente())));
-        ac.CargoBan(this.getCargo());
-        ac.setVisible(true);
-        this.setVisible(false);
+        
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

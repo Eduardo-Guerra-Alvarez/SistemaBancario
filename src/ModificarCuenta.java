@@ -6,8 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 
@@ -36,6 +34,9 @@ public class ModificarCuenta extends javax.swing.JFrame {
             c.setSaldo_actual(fileIn.readDouble());
             c.setContrato(fileIn.readInt());
             c.setTipo_cuenta(fileIn.readUTF());
+            c.setDiaM(fileIn.readInt());
+            c.setMesM(fileIn.readInt());
+            c.setAnioM(fileIn.readInt());
             
             if(id == c.getIdCliente()){
                 txtSaldo.setText(String.valueOf(String.format("%.0f",c.getSaldo_actual())));
@@ -64,6 +65,9 @@ public class ModificarCuenta extends javax.swing.JFrame {
                 cli.setSaldo_actual(fileIn.readDouble());
                 cli.setContrato(fileIn.readInt());
                 cli.setTipo_cuenta(fileIn.readUTF());
+                cli.setDiaM(fileIn.readInt());
+                cli.setMesM(fileIn.readInt());
+                cli.setAnioM(fileIn.readInt());
                 
                 lista.add(cli);
             }
@@ -111,6 +115,9 @@ public class ModificarCuenta extends javax.swing.JFrame {
                 fileOut.writeDouble(aux.getSaldo_actual());
                 fileOut.writeInt(aux.getContrato());
                 fileOut.writeUTF(aux.getTipo_cuenta());
+                fileOut.writeInt(c.getDiaM());
+                fileOut.writeInt(c.getMesM());
+                fileOut.writeInt(c.getAnioM());
             }
             fileOut.close();
         }
@@ -294,16 +301,16 @@ public class ModificarCuenta extends javax.swing.JFrame {
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-            if ( getCargo() == 1 ) {
-                MenuGerente mg = new MenuGerente();
-                mg.setVisible(true);
-                this.setVisible(false);
-            }
-            else if ( getCargo() == 0 ) {
-                MenuCajero mc = new MenuCajero();
-                mc.setVisible(true);
-                this.setVisible(false);
-            }
+        if ( getCargo() == 1 ) {
+            MenuGerente mg = new MenuGerente();
+            mg.setVisible(true);
+            this.setVisible(false);
+        }
+        else if ( getCargo() == 0 ) {
+            MenuCajero mc = new MenuCajero();
+            mc.setVisible(true);
+            this.setVisible(false);
+        }
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed

@@ -41,10 +41,10 @@ public class ModificarCliente extends javax.swing.JFrame {
                 txtApeMod.setText(c.getApellido());
                 txtDirMod.setText(c.getDireccion());
                 txtTelMod.setText(String.valueOf(String.format("%.0f",c.getTelefono())));
-                txtTipoMod.setText(c.getTipo_cliente());
+                cboTipo.setSelectedItem(c.getTipo_cliente());
                 txtCiuMod.setText(c.getCiudad());
                 txtEstMod.setText(c.getEstado());
-                txtPaisMod.setText(c.getPais());
+                cboPais.setSelectedItem(c.getPais());
                 txtSexoMod.setText(c.getSexo());
                 encontrado = true;
             }
@@ -83,10 +83,10 @@ public class ModificarCliente extends javax.swing.JFrame {
                 temp.setApellido(txtApeMod.getText());
                 temp.setDireccion(txtDirMod.getText());
                 temp.setTelefono(Double.parseDouble(txtTelMod.getText()));
-                temp.setTipo_cliente(txtTipoMod.getText());
+                temp.setTipo_cliente(cboTipo.getSelectedItem().toString());
                 temp.setCiudad(txtCiuMod.getText());
                 temp.setEstado(txtEstMod.getText());
-                temp.setPais(txtPaisMod.getText());
+                temp.setPais(cboPais.getSelectedItem().toString());
                 temp.setSexo(txtSexoMod.getText());
                 encontrado = true;
                 JOptionPane.showMessageDialog(null, "Modificado con exito");
@@ -133,18 +133,18 @@ public class ModificarCliente extends javax.swing.JFrame {
         jLabel26 = new javax.swing.JLabel();
         txtTelMod = new javax.swing.JTextField();
         jLabel31 = new javax.swing.JLabel();
-        txtTipoMod = new javax.swing.JTextField();
         jLabel27 = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
         txtCiuMod = new javax.swing.JTextField();
         txtEstMod = new javax.swing.JTextField();
-        txtPaisMod = new javax.swing.JTextField();
         txtSexoMod = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
+        cboTipo = new javax.swing.JComboBox<>();
+        cboPais = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -189,28 +189,22 @@ public class ModificarCliente extends javax.swing.JFrame {
             }
         });
 
+        cboTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Premium", "Oro", "Basico" }));
+
+        cboPais.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mexico", "EEUU", "España", "Colombia", "Canada", "Inglaterra" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel31)
-                .addGap(6, 6, 6)
-                .addComponent(txtTipoMod, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(btnEditar)
                 .addGap(49, 49, 49))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(14, 14, 14)
-                                .addComponent(jLabel26)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtTelMod, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel29))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(17, 17, 17)
                                 .addComponent(jLabel23)
@@ -232,13 +226,27 @@ public class ModificarCliente extends javax.swing.JFrame {
                                         .addGap(18, 18, 18)
                                         .addComponent(txtDirMod, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel30)))))
+                                        .addComponent(jLabel30))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(14, 14, 14)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel31)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(cboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(36, 36, 36))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel26)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtTelMod, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel29)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtPaisMod, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtSexoMod, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtEstMod, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCiuMod, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtCiuMod, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cboPais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(105, 105, 105)
                         .addComponent(jLabel22)
@@ -293,19 +301,18 @@ public class ModificarCliente extends javax.swing.JFrame {
                                     .addComponent(jLabel28))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(txtPaisMod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel30))
+                                    .addComponent(jLabel30)
+                                    .addComponent(cboPais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel29)
                             .addComponent(txtSexoMod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(jLabel31))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(txtTipoMod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(21, 21, 21)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel31)
+                            .addComponent(cboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(btnEditar)))
@@ -339,7 +346,7 @@ public class ModificarCliente extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Solo números","ERROR",JOptionPane.ERROR_MESSAGE);
         }
         if (encontrado == false) {
-            JOptionPane.showMessageDialog(null, "EL Usuario no existe", "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "EL Cliente no existe", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
@@ -395,6 +402,8 @@ public class ModificarCliente extends javax.swing.JFrame {
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnRegresar;
+    private javax.swing.JComboBox<String> cboPais;
+    private javax.swing.JComboBox<String> cboTipo;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
@@ -411,9 +420,7 @@ public class ModificarCliente extends javax.swing.JFrame {
     private javax.swing.JTextField txtEstMod;
     private javax.swing.JTextField txtIDMod;
     private javax.swing.JTextField txtNomMod;
-    private javax.swing.JTextField txtPaisMod;
     private javax.swing.JTextField txtSexoMod;
     private javax.swing.JTextField txtTelMod;
-    private javax.swing.JTextField txtTipoMod;
     // End of variables declaration//GEN-END:variables
 }

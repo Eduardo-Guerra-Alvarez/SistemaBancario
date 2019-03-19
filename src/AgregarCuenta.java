@@ -45,6 +45,9 @@ public class AgregarCuenta extends javax.swing.JFrame {
                 c.setSaldo_actual(fileIn.readDouble());
                 c.setContrato(fileIn.readInt());
                 c.setTipo_cuenta(fileIn.readUTF());
+                c.setDiaM(fileIn.readInt());
+                c.setMesM(fileIn.readInt());
+                c.setAnioM(fileIn.readInt());
                 txtIDCuenta.setText(String.valueOf(String.format("%.0f",c.getIdCuenta()+1)));
                 txtContrato.setText(String.valueOf(c.getContrato()+1));
             }
@@ -84,6 +87,9 @@ public class AgregarCuenta extends javax.swing.JFrame {
             c.setAnio(Integer.parseInt(txtAnio.getText()));
             c.setSaldo_actual(Double.parseDouble(txtSaldo.getText()));
             c.setTipo_cuenta(cboTipo.getSelectedItem().toString());
+            c.setDiaM(Integer.parseInt(txtDia.getText()));
+            c.setMesM(Integer.parseInt(txtMes.getText()));
+            c.setAnioM(Integer.parseInt(txtAnio.getText()));
 
             if (c.getSaldo_actual() >= 1000) {
                 if (c.getDia() <= 31 && c.getMes() <= 12 && (c.getAnio() < 2030 && c.getAnio() >= 2019)) {
@@ -98,6 +104,9 @@ public class AgregarCuenta extends javax.swing.JFrame {
                     fileOut.writeDouble(c.getSaldo_actual());
                     fileOut.writeInt(c.getContrato());
                     fileOut.writeUTF(c.getTipo_cuenta());
+                    fileOut.writeInt(c.getDiaM());
+                    fileOut.writeInt(c.getMesM());
+                    fileOut.writeInt(c.getAnioM());
                     fileOut.close();
                     JOptionPane.showMessageDialog(null, "Agregado con exito");
                     if ( getCargo() == 1 ) {

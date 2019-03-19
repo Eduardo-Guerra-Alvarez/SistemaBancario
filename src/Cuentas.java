@@ -1,8 +1,32 @@
 
 public class Cuentas {
     private double idCuenta,idCliente,idUsuario,saldo_actual,movimientos;
-    private int dia,mes,anio,contrato;
-    private String fecha_apertura,fecha_movimiento, tipo_cuenta;
+    private int dia,mes,anio,contrato, diaM, mesM, anioM;
+    private String tipo_cuenta;
+
+    public int getDiaM() {
+        return diaM;
+    }
+
+    public void setDiaM(int diaM) {
+        this.diaM = diaM;
+    }
+
+    public int getMesM() {
+        return mesM;
+    }
+
+    public void setMesM(int mesM) {
+        this.mesM = mesM;
+    }
+
+    public int getAnioM() {
+        return anioM;
+    }
+
+    public void setAnioM(int anioM) {
+        this.anioM = anioM;
+    }
 
     public int getDia() {
         return dia;
@@ -75,23 +99,6 @@ public class Cuentas {
     public void setMovimientos(double movimientos) {
         this.movimientos = movimientos;
     }
-
-    public String getFecha_apertura() {
-        return fecha_apertura;
-    }
-
-    public void setFecha_apertura(String fecha_apertura) {
-        this.fecha_apertura = fecha_apertura;
-    }
-
-    public String getFecha_movimiento() {
-        return fecha_movimiento;
-    }
-
-    public void setFecha_movimiento(String fecha_movimiento) {
-        this.fecha_movimiento = fecha_movimiento;
-    }
-
     public int getContrato() {
         return contrato;
     }

@@ -32,8 +32,9 @@ public class MenuGerente extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         btnMostrarCu = new javax.swing.JButton();
         btnMovimientos = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnBuscarCu = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
+        btnConsultas = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
@@ -196,12 +197,24 @@ public class MenuGerente extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Buscar Cuenta");
+        btnBuscarCu.setText("Buscar Cuenta");
+        btnBuscarCu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarCuActionPerformed(evt);
+            }
+        });
 
         btnModificar.setText("Modificar Cuenta");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnModificarActionPerformed(evt);
+            }
+        });
+
+        btnConsultas.setText("Consultas");
+        btnConsultas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultasActionPerformed(evt);
             }
         });
 
@@ -215,7 +228,8 @@ public class MenuGerente extends javax.swing.JFrame {
                     .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnMovimientos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnMostrarCu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnBuscarCu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnConsultas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -224,8 +238,10 @@ public class MenuGerente extends javax.swing.JFrame {
                 .addComponent(btnMostrarCu)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnMovimientos)
-                .addGap(44, 44, 44)
-                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnConsultas)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnBuscarCu)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnModificar)
                 .addContainerGap(25, Short.MAX_VALUE))
@@ -414,6 +430,20 @@ public class MenuGerente extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_btnMovimientosActionPerformed
 
+    private void btnBuscarCuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarCuActionPerformed
+        BuscarCuenta bc = new BuscarCuenta();
+        bc.setVisible(true);
+        bc.CargoBan(1);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnBuscarCuActionPerformed
+
+    private void btnConsultasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultasActionPerformed
+        ConsultaCuenta cc = new ConsultaCuenta();
+        cc.setVisible(true);
+        cc.CargoBan(1);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnConsultasActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -451,7 +481,9 @@ public class MenuGerente extends javax.swing.JFrame {
     private javax.swing.JButton btnAgregarCli;
     private javax.swing.JButton btnAgregarUs;
     private javax.swing.JButton btnBuscarCli;
+    private javax.swing.JButton btnBuscarCu;
     private javax.swing.JButton btnBuscarUs;
+    private javax.swing.JButton btnConsultas;
     private javax.swing.JButton btnEliminarCli;
     private javax.swing.JButton btnEliminarUs;
     private javax.swing.JButton btnModificar;
@@ -463,7 +495,6 @@ public class MenuGerente extends javax.swing.JFrame {
     private javax.swing.JButton btnMovimientos;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

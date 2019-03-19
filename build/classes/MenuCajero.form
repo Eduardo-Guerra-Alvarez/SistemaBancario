@@ -180,6 +180,7 @@
                       <Component id="btnBuscarCu" alignment="0" max="32767" attributes="0"/>
                       <Component id="btnMoviminento" alignment="0" max="32767" attributes="0"/>
                       <Component id="btnMostrarCu" alignment="0" pref="126" max="32767" attributes="0"/>
+                      <Component id="btnConsultas" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -194,6 +195,8 @@
                   <Component id="btnMoviminento" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnBuscarCu" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="btnConsultas" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -220,6 +223,17 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Buscar Cuenta"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBuscarCuActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnConsultas">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Consultas"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnConsultasActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

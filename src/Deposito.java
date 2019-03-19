@@ -6,8 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 
@@ -38,6 +36,9 @@ public class Deposito extends javax.swing.JFrame {
                 cli.setSaldo_actual(fileIn.readDouble());
                 cli.setContrato(fileIn.readInt());
                 cli.setTipo_cuenta(fileIn.readUTF());
+                cli.setDiaM(fileIn.readInt());
+                cli.setMesM(fileIn.readInt());
+                cli.setAnioM(fileIn.readInt());
                 
                 lista.add(cli);
             }
@@ -48,11 +49,13 @@ public class Deposito extends javax.swing.JFrame {
         int monto, deposito;
         for (int i = 0; i < lista.size(); i++) {
             temp = lista.get(i);
-            
             if (temp.getIdCuenta() == id) {
                 monto = Integer.parseInt(JOptionPane.showInputDialog(null, "Saldo $:"+ temp.getSaldo_actual()+"\nMonto a Depositar: "));
                 temp.setSaldo_actual(temp.getSaldo_actual()+monto);
                 txtMonto.setText(String.valueOf(String.format("%.0f", temp.getSaldo_actual())));
+                temp.setDiaM(Integer.parseInt(txtDia.getText()));
+                temp.setMesM(Integer.parseInt(txtMes.getText()));
+                temp.setAnioM(Integer.parseInt(txtAnio.getText()));
                 encontrado = true;
             }
         }
@@ -71,6 +74,9 @@ public class Deposito extends javax.swing.JFrame {
                 fileOut.writeDouble(aux.getSaldo_actual());
                 fileOut.writeInt(aux.getContrato());
                 fileOut.writeUTF(aux.getTipo_cuenta());
+                fileOut.writeInt(aux.getDiaM());
+                fileOut.writeInt(aux.getMesM());
+                fileOut.writeInt(aux.getAnioM());
             }
             fileOut.close();
         }
@@ -91,6 +97,9 @@ public class Deposito extends javax.swing.JFrame {
                 cli.setSaldo_actual(fileIn.readDouble());
                 cli.setContrato(fileIn.readInt());
                 cli.setTipo_cuenta(fileIn.readUTF());
+                cli.setDiaM(fileIn.readInt());
+                cli.setMesM(fileIn.readInt());
+                cli.setAnioM(fileIn.readInt());
                 
                 lista.add(cli);
             }
@@ -103,17 +112,20 @@ public class Deposito extends javax.swing.JFrame {
             temp = lista.get(i);
             if (temp.getIdCuenta() == id) {
                 monto = Integer.parseInt(JOptionPane.showInputDialog(null, "Saldo $:"+ temp.getSaldo_actual()+"\nMonto a Retirar: "));
-                if(monto <= 6000){
+                if(monto <= 7000){
                     if ((temp.getSaldo_actual()-monto) < 1000) {
                         JOptionPane.showMessageDialog(this, "Saldo Insuficiente","ERROR",JOptionPane.ERROR_MESSAGE);
                     }
                     else {
                         temp.setSaldo_actual(temp.getSaldo_actual()-monto);
+                        temp.setDiaM(Integer.parseInt(txtDia.getText()));
+                        temp.setMesM(Integer.parseInt(txtMes.getText()));
+                        temp.setAnioM(Integer.parseInt(txtAnio.getText()));
                         txtMonto.setText(String.valueOf(String.format("%.0f", temp.getSaldo_actual())));
                     }
                 }
                 else {
-                    JOptionPane.showMessageDialog(this, "Retiros no mayores a 6000","ERROR",JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Retiros no mayores a 7000","ERROR",JOptionPane.ERROR_MESSAGE);
                 }
                 encontrado = true;
             }
@@ -133,6 +145,10 @@ public class Deposito extends javax.swing.JFrame {
                 fileOut.writeDouble(aux.getSaldo_actual());
                 fileOut.writeInt(aux.getContrato());
                 fileOut.writeUTF(aux.getTipo_cuenta());
+                fileOut.writeInt(aux.getDiaM());
+                fileOut.writeInt(aux.getMesM());
+                fileOut.writeInt(aux.getAnioM());
+                
             }
             fileOut.close();
         }
@@ -155,6 +171,13 @@ public class Deposito extends javax.swing.JFrame {
         btnRegresar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         txtMonto = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        txtDia = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        txtMes = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        txtAnio = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -186,6 +209,47 @@ public class Deposito extends javax.swing.JFrame {
 
         txtMonto.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Fecha Actual"));
+
+        jLabel3.setText("Dia");
+
+        jLabel4.setText("Mes");
+
+        jLabel5.setText("Año");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtDia, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtMes, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4)
+                    .addComponent(txtMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5)
+                    .addComponent(txtAnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -193,43 +257,45 @@ public class Deposito extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addComponent(btnDepositar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnRetirar))
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(btnDepositar)
+                                    .addGap(56, 56, 56)
+                                    .addComponent(btnRetirar))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabel2)
+                                        .addComponent(jLabel1))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txtIDCue, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtMonto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtIDCue, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(46, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnRegresar)
-                .addGap(72, 72, 72))
+                        .addGap(95, 95, 95)
+                        .addComponent(btnRegresar)))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(49, 49, 49)
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtIDCue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtIDCue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(txtMonto, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRetirar)
                     .addComponent(btnDepositar))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnRegresar)
                 .addContainerGap(18, Short.MAX_VALUE))
         );
@@ -317,7 +383,14 @@ public class Deposito extends javax.swing.JFrame {
     private javax.swing.JButton btnRetirar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField txtAnio;
+    private javax.swing.JTextField txtDia;
     private javax.swing.JTextField txtIDCue;
+    private javax.swing.JTextField txtMes;
     private javax.swing.JLabel txtMonto;
     // End of variables declaration//GEN-END:variables
 }
