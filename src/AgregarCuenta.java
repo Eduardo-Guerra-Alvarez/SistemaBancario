@@ -31,7 +31,7 @@ public class AgregarCuenta extends javax.swing.JFrame {
     }
 
     public void MostrarID() throws FileNotFoundException{
-        fileIn = new DataInputStream(new FileInputStream("d:/txt/cuenta.txt"));
+        fileIn = new DataInputStream(new FileInputStream("d:/txt/cuenta.bin"));
         txtIDCuenta.setText(String.valueOf(1));
         txtContrato.setText(String.valueOf(1));
         try{
@@ -56,7 +56,7 @@ public class AgregarCuenta extends javax.swing.JFrame {
         }
     }
     public void Agregar(Double usu) throws FileNotFoundException, IOException{
-        fileIn = new DataInputStream(new FileInputStream("d:/txt/usuario.txt"));
+        fileIn = new DataInputStream(new FileInputStream("d:/txt/usuario.bin"));
         encontrado = false;
         try{
             while(true){
@@ -79,7 +79,7 @@ public class AgregarCuenta extends javax.swing.JFrame {
             
         }
         if (encontrado == true) {
-            fileOut = new DataOutputStream(new FileOutputStream("d:/txt/cuenta.txt",true));
+            fileOut = new DataOutputStream(new FileOutputStream("d:/txt/cuenta.bin",true));
             c.setIdCliente(Double.parseDouble(txtIDc.getText()));
             c.setIdUsuario(Double.parseDouble(txtIDUsuario.getText()));
             c.setDia(Integer.parseInt(txtDia.getText()));
@@ -93,31 +93,35 @@ public class AgregarCuenta extends javax.swing.JFrame {
 
             if (c.getSaldo_actual() >= 1000) {
                 if (c.getDia() <= 31 && c.getMes() <= 12 && (c.getAnio() < 2030 && c.getAnio() >= 2019)) {
-                    c.setIdCuenta(c.getIdCuenta()+1);
-                    c.setContrato(c.getContrato()+1);
-                    fileOut.writeDouble(c.getIdCuenta());
-                    fileOut.writeDouble(c.getIdCliente());
-                    fileOut.writeDouble(c.getIdUsuario());
-                    fileOut.writeInt(c.getDia());
-                    fileOut.writeInt(c.getMes());
-                    fileOut.writeInt(c.getAnio());
-                    fileOut.writeDouble(c.getSaldo_actual());
-                    fileOut.writeInt(c.getContrato());
-                    fileOut.writeUTF(c.getTipo_cuenta());
-                    fileOut.writeInt(c.getDiaM());
-                    fileOut.writeInt(c.getMesM());
-                    fileOut.writeInt(c.getAnioM());
-                    fileOut.close();
-                    JOptionPane.showMessageDialog(null, "Agregado con exito");
-                    if ( getCargo() == 1 ) {
-                        MenuGerente mg = new MenuGerente();
-                        mg.setVisible(true);
-                        this.setVisible(false);
-                    }
-                    else if ( getCargo() == 0 ) {
-                        MenuCajero mc = new MenuCajero();
-                        mc.setVisible(true);
-                        this.setVisible(false);
+                    if (c.getMes() == 2 && c.getDia() >= 28) {
+                        JOptionPane.showMessageDialog(this, "Febrero tiene 28 dias","ERROR",JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        c.setIdCuenta(c.getIdCuenta()+1);
+                        c.setContrato(c.getContrato()+1);
+                        fileOut.writeDouble(c.getIdCuenta());
+                        fileOut.writeDouble(c.getIdCliente());
+                        fileOut.writeDouble(c.getIdUsuario());
+                        fileOut.writeInt(c.getDia());
+                        fileOut.writeInt(c.getMes());
+                        fileOut.writeInt(c.getAnio());
+                        fileOut.writeDouble(c.getSaldo_actual());
+                        fileOut.writeInt(c.getContrato());
+                        fileOut.writeUTF(c.getTipo_cuenta());
+                        fileOut.writeInt(c.getDiaM());
+                        fileOut.writeInt(c.getMesM());
+                        fileOut.writeInt(c.getAnioM());
+                        fileOut.close();
+                        JOptionPane.showMessageDialog(null, "Agregado con exito");
+                        if ( getCargo() == 1 ) {
+                            MenuGerente mg = new MenuGerente();
+                            mg.setVisible(true);
+                            this.setVisible(false);
+                        }
+                        else if ( getCargo() == 0 ) {
+                            MenuCajero mc = new MenuCajero();
+                            mc.setVisible(true);
+                            this.setVisible(false);
+                        }
                     }
                 }
                 else {

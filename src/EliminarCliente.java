@@ -21,7 +21,7 @@ public class EliminarCliente extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
     }
     public void EliminarCue(double id) throws FileNotFoundException, IOException{
-        fileIn = new DataInputStream(new FileInputStream("d:/txt/cuenta.txt"));
+        fileIn = new DataInputStream(new FileInputStream("d:/txt/cuenta.bin"));
         ArrayList<Cuentas> lista = new ArrayList();
         encontrado = false;
         try{
@@ -52,7 +52,7 @@ public class EliminarCliente extends javax.swing.JFrame {
                 lista.remove(temp);
             }
         }
-        fileOut = new DataOutputStream(new FileOutputStream("d:/txt/cuenta.txt"));
+        fileOut = new DataOutputStream(new FileOutputStream("d:/txt/cuenta.bin"));
         for (int i = 0; i < lista.size(); i++) {
             temp = lista.get(i);
             fileOut.writeDouble(temp.getIdCuenta());
@@ -73,7 +73,7 @@ public class EliminarCliente extends javax.swing.JFrame {
     }
 
     public void Eliminar(double id) throws FileNotFoundException, IOException{
-        fileIn = new DataInputStream(new FileInputStream("d:/txt/cliente.txt"));
+        fileIn = new DataInputStream(new FileInputStream("d:/txt/cliente.bin"));
         ArrayList<Clientes> lista = new ArrayList();
         encontrado = false;
         try{
@@ -110,7 +110,7 @@ public class EliminarCliente extends javax.swing.JFrame {
                 encontrado = true;
             }
         }
-        fileOut = new DataOutputStream(new FileOutputStream("d:/txt/cliente.txt"));
+        fileOut = new DataOutputStream(new FileOutputStream("d:/txt/cliente.bin"));
         for (int i = 0; i < lista.size(); i++) {
             temp = lista.get(i);
             fileOut.writeDouble(temp.getIdCliente());

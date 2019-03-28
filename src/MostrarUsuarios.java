@@ -24,7 +24,7 @@ public class MostrarUsuarios extends javax.swing.JFrame {
     }
     
     public void MostrarTabla() throws FileNotFoundException{
-        fileIn = new DataInputStream(new FileInputStream("d:/txt/usuario.txt"));
+        fileIn = new DataInputStream(new FileInputStream("d:/txt/usuario.bin"));
         ArrayList<Usuarios> lista = new ArrayList();
         try{
             while(true){

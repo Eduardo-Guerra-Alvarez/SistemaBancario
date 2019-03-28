@@ -27,7 +27,7 @@ public class EliminarUsuario extends javax.swing.JFrame {
         return cargo;
     }
     public void Eliminar(double id) throws FileNotFoundException, IOException{
-        fileIn = new DataInputStream(new FileInputStream("d:/txt/usuario.txt"));
+        fileIn = new DataInputStream(new FileInputStream("d:/txt/usuario.bin"));
         ArrayList<Usuarios> lista = new ArrayList();
         encontrado = false;
         try{
@@ -64,7 +64,7 @@ public class EliminarUsuario extends javax.swing.JFrame {
             }
         }
         if (encontrado == true) {
-            fileOut = new DataOutputStream(new FileOutputStream("d:/txt/usuario.txt"));
+            fileOut = new DataOutputStream(new FileOutputStream("d:/txt/usuario.bin"));
             for (int i = 0; i < lista.size(); i++) {
                 temp = lista.get(i);
                 fileOut.writeDouble(temp.getIdUsuario());

@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
 public class ModificarCliente extends javax.swing.JFrame {
@@ -13,7 +15,10 @@ public class ModificarCliente extends javax.swing.JFrame {
     DataInputStream fileIn = null;
     DataOutputStream fileOut = null;
     boolean encontrado = false;
+    boolean aprobado = false;
     int cargo;
+    Pattern p = Pattern.compile("^[A-Z][a-z]{2,}");
+    Matcher m;
     Clientes c = new Clientes();
     public ModificarCliente() {
         initComponents();
@@ -21,7 +26,7 @@ public class ModificarCliente extends javax.swing.JFrame {
     }
 
     public void BuscarMod(double id) throws FileNotFoundException, IOException{
-        fileIn = new DataInputStream(new FileInputStream("d:/txt/cliente.txt"));
+        fileIn = new DataInputStream(new FileInputStream("d:/txt/cliente.bin"));
         encontrado = false;
         while(true){
             c.setIdCliente(fileIn.readDouble());
@@ -52,9 +57,10 @@ public class ModificarCliente extends javax.swing.JFrame {
         }
     }
      public void Editar(double id) throws FileNotFoundException, IOException{
-        fileIn = new DataInputStream(new FileInputStream("d:/txt/cliente.txt"));
+        fileIn = new DataInputStream(new FileInputStream("d:/txt/cliente.bin"));
         ArrayList<Clientes> lista = new ArrayList();
         encontrado = false;
+        aprobado = false;
         try{
             while(true){
                 Clientes cli = new Clientes();
@@ -78,23 +84,55 @@ public class ModificarCliente extends javax.swing.JFrame {
             temp = lista.get(i);
             
             if (temp.getIdCliente() == id) {
-                
-                temp.setNombre(txtNomMod.getText());
-                temp.setApellido(txtApeMod.getText());
-                temp.setDireccion(txtDirMod.getText());
-                temp.setTelefono(Double.parseDouble(txtTelMod.getText()));
-                temp.setTipo_cliente(cboTipo.getSelectedItem().toString());
-                temp.setCiudad(txtCiuMod.getText());
-                temp.setEstado(txtEstMod.getText());
-                temp.setPais(cboPais.getSelectedItem().toString());
-                temp.setSexo(txtSexoMod.getText());
+                m = p.matcher(txtNomMod.getText());
+                if (m.find()) {
+                    m = p.matcher(txtApeMod.getText());
+                    if (m.find()) {
+                        m = p.matcher(txtDirMod.getText());
+                        if (m.find()) {
+                            m = p.matcher(txtCiuMod.getText());
+                            if (m.find()) {
+                                m = p.matcher(txtEstMod.getText());
+                                if (m.find()) {
+                                    Pattern t = Pattern.compile("[0-9]{10,10}");
+                                    Matcher tel;
+                                    tel = t.matcher(txtTelMod.getText());
+                                    if (tel.find()) {
+                                        temp.setNombre(txtNomMod.getText());
+                                        temp.setApellido(txtApeMod.getText());
+                                        temp.setDireccion(txtDirMod.getText());
+                                        temp.setTelefono(Double.parseDouble(txtTelMod.getText()));
+                                        temp.setTipo_cliente(cboTipo.getSelectedItem().toString());
+                                        temp.setCiudad(txtCiuMod.getText());
+                                        temp.setEstado(txtEstMod.getText());
+                                        temp.setPais(cboPais.getSelectedItem().toString());
+                                        temp.setSexo(txtSexoMod.getText());
+                                        aprobado = true;
+                                        JOptionPane.showMessageDialog(null, "Modificado con exito");
+                                    } else {
+                                        JOptionPane.showMessageDialog(null, "Error en el Telefono", "ERROR", JOptionPane.ERROR_MESSAGE);
+                                    }
+                                } else{
+                                    JOptionPane.showMessageDialog(null, "Error en el Estado", "ERROR", JOptionPane.ERROR_MESSAGE);
+                                }
+                            } else{
+                                JOptionPane.showMessageDialog(null, "Error en la Ciudad", "ERROR", JOptionPane.ERROR_MESSAGE);
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Error en la Direccion", "ERROR", JOptionPane.ERROR_MESSAGE);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Error en el Apellido", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error en el Nombre", "ERROR", JOptionPane.ERROR_MESSAGE);
+                }
                 encontrado = true;
-                JOptionPane.showMessageDialog(null, "Modificado con exito");
             }
         }
-        if(encontrado == true){
+        if(encontrado == true && aprobado == true){
             Clientes aux = new Clientes();
-            fileOut = new DataOutputStream(new FileOutputStream("d:/txt/cliente.txt"));
+            fileOut = new DataOutputStream(new FileOutputStream("d:/txt/cliente.bin"));
             for (int i = 0; i < lista.size(); i++) {
                 aux = lista.get(i);
                

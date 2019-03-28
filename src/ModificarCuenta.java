@@ -22,7 +22,7 @@ public class ModificarCuenta extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
     }
     public void BuscarMod(double id) throws FileNotFoundException, IOException{
-        fileIn = new DataInputStream(new FileInputStream("d:/txt/cuenta.txt"));
+        fileIn = new DataInputStream(new FileInputStream("d:/txt/cuenta.bin"));
         encontrado = false;
         while(true){
             c.setIdCuenta(fileIn.readDouble());
@@ -50,7 +50,7 @@ public class ModificarCuenta extends javax.swing.JFrame {
         }
     }
      public void Editar(double id) throws FileNotFoundException, IOException{
-        fileIn = new DataInputStream(new FileInputStream("d:/txt/cuenta.txt"));
+        fileIn = new DataInputStream(new FileInputStream("d:/txt/cuenta.bin"));
         ArrayList<Cuentas> lista = new ArrayList();
         encontrado = false;
         try{
@@ -85,12 +85,16 @@ public class ModificarCuenta extends javax.swing.JFrame {
                 temp.setTipo_cuenta(cboTipo.getSelectedItem().toString());
                 temp.setSaldo_actual(Double.parseDouble(txtSaldo.getText()));
                 if (temp.getDia() <= 31 && temp.getMes() <= 12 && (temp.getAnio() < 2030 && temp.getAnio() >= 2019)) {
-                    if (temp.getSaldo_actual() >= 1000) {
-                        aceptado = true;
-                        JOptionPane.showMessageDialog(null, "Modificado con exito");
-                    }
-                    else {
-                        JOptionPane.showMessageDialog(null, "Saldo debe ser mayor a 1000");
+                    if (temp.getMes() == 2 && temp.getDia() >= 28) {
+                        JOptionPane.showMessageDialog(this, "Febrero tiene 28 dias","ERROR",JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        if (temp.getSaldo_actual() >= 1000) {
+                            aceptado = true;
+                            JOptionPane.showMessageDialog(null, "Modificado con exito");
+                        }
+                        else {
+                            JOptionPane.showMessageDialog(null, "Saldo debe ser mayor a 1000");
+                        }
                     }
                 }
                 else {
@@ -102,7 +106,7 @@ public class ModificarCuenta extends javax.swing.JFrame {
         }
         if(encontrado == true && aceptado == true){
             Cuentas aux = new Cuentas();
-            fileOut = new DataOutputStream(new FileOutputStream("d:/txt/cuenta.txt"));
+            fileOut = new DataOutputStream(new FileOutputStream("d:/txt/cuenta.bin"));
             for (int i = 0; i < lista.size(); i++) {
                 aux = lista.get(i);
                

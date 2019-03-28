@@ -16,7 +16,7 @@ public class BuscarCliente extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
     }
 public void Buscar(double id) throws FileNotFoundException, IOException{
-        fileIn = new DataInputStream(new FileInputStream("d:/txt/cliente.txt"));
+        fileIn = new DataInputStream(new FileInputStream("d:/txt/cliente.bin"));
         encontrado = false;
         while(true){
             c.setIdCliente(fileIn.readDouble());

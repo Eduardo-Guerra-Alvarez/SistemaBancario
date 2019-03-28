@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
 
@@ -13,14 +15,15 @@ public class ModificarUsuario extends javax.swing.JFrame {
     DataInputStream fileIn = null;
     DataOutputStream fileOut = null;
     Usuarios u = new Usuarios();
-    boolean encontrado;
-    int cargo;
+    boolean encontrado,aprobado;
+    Pattern p = Pattern.compile("^[A-Z][a-z]{2,}");
+    Matcher m;
     public ModificarUsuario() {
         initComponents();
         this.setLocationRelativeTo(null);
     }
     public void Buscar(double id) throws FileNotFoundException, IOException{
-        fileIn = new DataInputStream(new FileInputStream("d:/txt/usuario.txt"));
+        fileIn = new DataInputStream(new FileInputStream("d:/txt/usuario.bin"));
         encontrado = false;
         while(true){
             u.setIdUsuario(fileIn.readDouble());
@@ -35,7 +38,6 @@ public class ModificarUsuario extends javax.swing.JFrame {
             u.setSexo(fileIn.readUTF());
             
             if(id == u.getIdUsuario()){
-                //txtIDMod.setText(String.valueOf(String.format("%.0f",u.getIdUsuario())));
                 txtNombreMod.setText(u.getNombre());
                 txtApellidosMod.setText(u.getApellido());
                 txtDireccionMod.setText(u.getDireccion());
@@ -51,9 +53,10 @@ public class ModificarUsuario extends javax.swing.JFrame {
         }
     }
     public void Editar(double id) throws FileNotFoundException, IOException{
-        fileIn = new DataInputStream(new FileInputStream("d:/txt/usuario.txt"));
+        fileIn = new DataInputStream(new FileInputStream("d:/txt/usuario.bin"));
         ArrayList<Usuarios> lista = new ArrayList();
         encontrado = false;
+        aprobado = false;
         try{
             while(true){
                 Usuarios us = new Usuarios();
@@ -76,21 +79,54 @@ public class ModificarUsuario extends javax.swing.JFrame {
         for (int i = 0; i < lista.size(); i++) {
             temp = lista.get(i);
             if (temp.getIdUsuario() == id) {
-                temp.setNombre(txtNombreMod.getText());
-                temp.setApellido(txtApellidosMod.getText());
-                temp.setDireccion(txtDireccionMod.getText());
-                temp.setTelefono(Double.parseDouble(txtTelefonoMod.getText()));
-                temp.setCargo_bancario(cboCargo.getSelectedItem().toString());
-                temp.setCiudad(txtCiudadMod.getText());
-                temp.setEstado(txtEstadoMod.getText());
-                temp.setPais(cboPais.getSelectedItem().toString());
-                temp.setSexo(txtSexoMod.getText());
+                m = p.matcher(txtNombreMod.getText());
+                if (m.find()) {
+                    m = p.matcher(txtApellidosMod.getText());
+                    if (m.find()) {
+                        m = p.matcher(txtDireccionMod.getText());
+                        if (m.find()) {
+                            m = p.matcher(txtCiudadMod.getText());
+                            if (m.find()) {
+                                m = p.matcher(txtEstadoMod.getText());
+                                if (m.find()) {
+                                    Pattern t = Pattern.compile("[0-9]{10,10}");
+                                    Matcher tel;
+                                    tel = t.matcher(txtTelefonoMod.getText());
+                                    if (tel.find()) {
+                                        temp.setNombre(txtNombreMod.getText());
+                                        temp.setApellido(txtApellidosMod.getText());
+                                        temp.setDireccion(txtDireccionMod.getText());
+                                        temp.setTelefono(Double.parseDouble(txtTelefonoMod.getText()));
+                                        temp.setCargo_bancario(cboCargo.getSelectedItem().toString());
+                                        temp.setCiudad(txtCiudadMod.getText());
+                                        temp.setEstado(txtEstadoMod.getText());
+                                        temp.setPais(cboPais.getSelectedItem().toString());
+                                        temp.setSexo(txtSexoMod.getText());
+                                        aprobado = true;
+                                    } else {
+                                        JOptionPane.showMessageDialog(null, "Error en el Telefono", "ERROR", JOptionPane.ERROR_MESSAGE);
+                                    }
+                                } else{
+                                    JOptionPane.showMessageDialog(null, "Error en el Estado", "ERROR", JOptionPane.ERROR_MESSAGE);
+                                }
+                            } else{
+                                JOptionPane.showMessageDialog(null, "Error en la Ciudad", "ERROR", JOptionPane.ERROR_MESSAGE);
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Error en la Direccion", "ERROR", JOptionPane.ERROR_MESSAGE);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Error en el Apellido", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error en el Nombre", "ERROR", JOptionPane.ERROR_MESSAGE);
+                }
                 encontrado = true;
             }
         }
-        if (encontrado == true) {
+        if (encontrado == true && aprobado == true) {
             Usuarios aux;
-            fileOut = new DataOutputStream(new FileOutputStream("d:/txt/usuario.txt"));
+            fileOut = new DataOutputStream(new FileOutputStream("d:/txt/usuario.bin"));
             for (int i = 0; i < lista.size(); i++) {
                 aux = lista.get(i);
                 fileOut.writeDouble(aux.getIdUsuario());
@@ -108,12 +144,7 @@ public class ModificarUsuario extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Usuario modificado con exito");
         }
     }
-    public void CargoBan(int a){
-        cargo = a;
-    }
-    public int getCargo(){
-        return cargo;
-    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -328,7 +359,7 @@ public class ModificarUsuario extends javax.swing.JFrame {
             Editar(Double.parseDouble(txtIDMod.getText()));
         } catch (IOException ex) {
             //Logger.getLogger(MenuUsuario.class.getName()).log(Level.SEVERE, null, ex);
-        }catch(NumberFormatException ex){//COMPARA QUE SE HAYA INGRESADO UN NUMERO Y NO UN CARACTER
+        }catch(NumberFormatException ex){
             JOptionPane.showMessageDialog(this, "Solo números","ERROR",JOptionPane.ERROR_MESSAGE);
         }
         if (encontrado == false) {
@@ -337,16 +368,10 @@ public class ModificarUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        if ( getCargo() == 1 ) {
-            MenuGerente mg = new MenuGerente();
-            mg.setVisible(true);
-            this.setVisible(false);
-        }
-        else if ( getCargo() == 0) {
-            MenuCajero mc = new MenuCajero();
-            mc.setVisible(true);
-            this.setVisible(false);
-        }
+
+        MenuGerente mg = new MenuGerente();
+        mg.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     /**

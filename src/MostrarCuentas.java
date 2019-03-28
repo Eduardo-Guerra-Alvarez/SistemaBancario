@@ -24,7 +24,7 @@ public class MostrarCuentas extends javax.swing.JFrame {
         return cargo;
     }
     public void MostrarTabla() throws FileNotFoundException, IOException{
-        fileIn = new DataInputStream(new FileInputStream("d:/txt/cuenta.txt"));
+        fileIn = new DataInputStream(new FileInputStream("d:/txt/cuenta.bin"));
         ArrayList<Cuentas> lista = new ArrayList();
         try{
             while(true){
@@ -46,13 +46,22 @@ public class MostrarCuentas extends javax.swing.JFrame {
         }catch(IOException ex){
             
         }
-        String [] nombre = {"ID Cuenta","ID Cliente","ID Ussuario","Fecha", "Saldo Actual", "Contrato","Tipo Cuenta"};
+        String [] nombre = {"ID Cuenta","ID Cliente","ID Usuario","Fecha", "Saldo Actual", "Contrato","Tipo Cuenta"};
         String [][] data = new String[lista.size()][7];
         Cuentas temp;
         String fecha;
         for (int i = 0; i < lista.size(); i++) {
             temp = lista.get(i);
-            fecha = String.valueOf(temp.getDia())+"/"+String.valueOf(temp.getMes())+"/"+String.valueOf(temp.getAnio());
+            if(temp.getDia() <= 9){
+                fecha = String.valueOf("0"+temp.getDia())+"/"+String.valueOf(temp.getMes())+"/"+String.valueOf(temp.getAnio());
+            } else if (temp.getMes() <= 9) {
+                fecha = String.valueOf(temp.getDia())+"/"+"0"+String.valueOf(temp.getMes())+"/"+String.valueOf(temp.getAnio());
+            } else if (temp.getDia() <= 9 && temp.getMes() <= 9) {
+                fecha = String.valueOf("0"+temp.getDia())+"/"+"0"+String.valueOf(temp.getMes())+"/"+String.valueOf(temp.getAnio());
+            }
+            else {
+                fecha = String.valueOf(temp.getDia())+"/"+String.valueOf(temp.getMes())+"/"+String.valueOf(temp.getAnio());
+            }
             data[i][0] = String.valueOf(String.format("%.0f", temp.getIdCuenta()));
             data[i][1] = String.valueOf(String.format("%.0f", temp.getIdCliente()));
             data[i][2] = String.valueOf(String.format("%.0f", temp.getIdUsuario()));

@@ -7,6 +7,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
 public class AgregarCliente extends javax.swing.JFrame {
@@ -14,6 +16,8 @@ public class AgregarCliente extends javax.swing.JFrame {
     DataInputStream fileIn = null;
     Clientes c = new Clientes();
     int cargo;
+    Pattern p = Pattern.compile("^[A-Z][a-z]{2,}");
+    Matcher m;
     
     public AgregarCliente() throws FileNotFoundException {
         initComponents();
@@ -27,7 +31,7 @@ public class AgregarCliente extends javax.swing.JFrame {
         return cargo;
     }
     public void MostrarID() throws FileNotFoundException{
-        fileIn = new DataInputStream(new FileInputStream("d:/txt/cliente.txt"));
+        fileIn = new DataInputStream(new FileInputStream("d:/txt/cliente.bin"));
         txtID.setText(String.valueOf(1));
         try{
             while(true){
@@ -49,44 +53,72 @@ public class AgregarCliente extends javax.swing.JFrame {
         
     }
     public void Agregar() throws FileNotFoundException, IOException{
-        fileOut = new DataOutputStream(new FileOutputStream("d:/txt/cliente.txt",true));
-        if (txtNombre.getText().equals("") || txtApellidos.getText().equals("") || txtDireccion.getText().equals("")
-                || txtCiudad.getText().equals("") || txtEstado.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "Campos vacios","ERROR",JOptionPane.ERROR_MESSAGE);
+        fileOut = new DataOutputStream(new FileOutputStream("d:/txt/cliente.bin",true));
+        m = p.matcher(txtNombre.getText());
+        if (m.find()) {
+            m = p.matcher(txtApellidos.getText());
+            if (m.find()) {
+                Pattern d = Pattern.compile("^[A-Z|#][a-z|0-9]+");
+                Matcher dir;
+                dir = d.matcher(txtDireccion.getText());
+                if (dir.find()) {
+                    m = p.matcher(txtCiudad.getText());
+                    if (m.find()) {
+                        m = p.matcher(txtEstado.getText());
+                        if (m.find()) {
+                            Pattern t = Pattern.compile("[0-9]{10,10}");
+                            Matcher tel;
+                            tel = t.matcher(txtTelefono.getText());
+                            if (tel.find()) {
+                                c.setIdCliente(c.getIdCliente()+1);
+                                c.setNombre(txtNombre.getText());
+                                c.setApellido(txtApellidos.getText());
+                                c.setDireccion(txtDireccion.getText());
+                                c.setTelefono(Double.parseDouble(txtTelefono.getText()));
+                                c.setTipo_cliente(cboTipo.getSelectedItem().toString());
+                                c.setCiudad(txtCiudad.getText());
+                                c.setEstado(txtEstado.getText());
+                                c.setPais(cboPais.getSelectedItem().toString());
+                                if (optM.isSelected()) {
+                                    c.setSexo("M");
+                                }
+                                else if (optF.isSelected()) {
+                                    c.setSexo("F");
+                                }
+                                fileOut.writeDouble(c.getIdCliente());
+                                fileOut.writeUTF(c.getNombre());
+                                fileOut.writeUTF(c.getApellido());
+                                fileOut.writeUTF(c.getDireccion());
+                                fileOut.writeDouble(c.getTelefono());
+                                fileOut.writeUTF(c.getTipo_cliente());
+                                fileOut.writeUTF(c.getCiudad());
+                                fileOut.writeUTF(c.getEstado());
+                                fileOut.writeUTF(c.getPais());
+                                fileOut.writeUTF(c.getSexo());
+                                fileOut.close();
+                                AgregarCuenta ac = new AgregarCuenta();
+                                ac.txtIDc.setText(String.valueOf(String.format("%.0f",c.getIdCliente())));
+                                ac.CargoBan(this.getCargo());
+                                ac.setVisible(true);
+                                this.setVisible(false);
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Error en el Telefono", "ERROR", JOptionPane.ERROR_MESSAGE);
+                            }
+                    } else{
+                        JOptionPane.showMessageDialog(null, "Error en el Estado", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    }
+                    } else{
+                        JOptionPane.showMessageDialog(null, "Error en la Ciudad", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error en la Direccion", "ERROR", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Error en el Apellido", "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
         } else {
-            c.setIdCliente(c.getIdCliente()+1);
-            c.setNombre(txtNombre.getText());
-            c.setApellido(txtApellidos.getText());
-            c.setDireccion(txtDireccion.getText());
-            c.setTelefono(Double.parseDouble(txtTelefono.getText()));
-            c.setTipo_cliente(cboTipo.getSelectedItem().toString());
-            c.setCiudad(txtCiudad.getText());
-            c.setEstado(txtEstado.getText());
-            c.setPais(cboPais.getSelectedItem().toString());
-            if (optM.isSelected()) {
-                c.setSexo("M");
-            }
-            else if (optF.isSelected()) {
-                c.setSexo("F");
-            }
-            fileOut.writeDouble(c.getIdCliente());
-            fileOut.writeUTF(c.getNombre());
-            fileOut.writeUTF(c.getApellido());
-            fileOut.writeUTF(c.getDireccion());
-            fileOut.writeDouble(c.getTelefono());
-            fileOut.writeUTF(c.getTipo_cliente());
-            fileOut.writeUTF(c.getCiudad());
-            fileOut.writeUTF(c.getEstado());
-            fileOut.writeUTF(c.getPais());
-            fileOut.writeUTF(c.getSexo());
-            fileOut.close();
-            AgregarCuenta ac = new AgregarCuenta();
-            ac.txtIDc.setText(String.valueOf(String.format("%.0f",c.getIdCliente())));
-            ac.CargoBan(this.getCargo());
-            ac.setVisible(true);
-            this.setVisible(false);
+            JOptionPane.showMessageDialog(null, "Error en el Nombre", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
-        
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -148,6 +180,7 @@ public class AgregarCliente extends javax.swing.JFrame {
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Sexo"));
 
         optSexo.add(optM);
+        optM.setSelected(true);
         optM.setText("M");
 
         optSexo.add(optF);

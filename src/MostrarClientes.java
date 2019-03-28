@@ -26,7 +26,7 @@ public class MostrarClientes extends javax.swing.JFrame {
     }
     
     public void MostrarTabla() throws FileNotFoundException{
-        fileIn = new DataInputStream(new FileInputStream("d:/txt/cliente.txt"));
+        fileIn = new DataInputStream(new FileInputStream("d:/txt/cliente.bin"));
         ArrayList<Clientes> lista = new ArrayList();
         try{
             while(true){
@@ -77,6 +77,7 @@ public class MostrarClientes extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Clientes");
+        setUndecorated(true);
         setResizable(false);
 
         tlbMostrar.setModel(new javax.swing.table.DefaultTableModel(
@@ -104,19 +105,19 @@ public class MostrarClientes extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1090, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(568, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnRegresar)
-                .addGap(439, 439, 439))
-            .addComponent(jScrollPane1)
+                .addGap(485, 485, 485))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 527, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnRegresar)
-                .addContainerGap())
+                .addContainerGap(10, Short.MAX_VALUE))
         );
 
         pack();

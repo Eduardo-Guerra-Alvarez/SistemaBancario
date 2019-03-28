@@ -7,6 +7,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
 public class AgregarUsuario extends javax.swing.JFrame {
@@ -14,21 +16,16 @@ public class AgregarUsuario extends javax.swing.JFrame {
     DataOutputStream fileOut = null;
     DataInputStream fileIn = null;
     Usuarios u = new Usuarios();
-    int cargo;
-    double id = 0;
+    Pattern p = Pattern.compile("^[A-Z][a-z]{2,}");
+    Matcher m;
+    
     public AgregarUsuario() throws FileNotFoundException {
         initComponents();
         this.setLocationRelativeTo(null);
         MostrarID();
     }
-    public void CargoBan(int a){
-        cargo = a;
-    }
-    public int getCargo(){
-        return cargo;
-    }
     public void MostrarID() throws FileNotFoundException{
-        fileIn = new DataInputStream(new FileInputStream("d:/txt/usuario.txt"));
+        fileIn = new DataInputStream(new FileInputStream("d:/txt/usuario.bin"));
         txtID.setText(String.valueOf(1));
         try{
             while(true){
@@ -49,42 +46,72 @@ public class AgregarUsuario extends javax.swing.JFrame {
         }
     }
     public void Agregar() throws FileNotFoundException, IOException{
-        fileOut = new DataOutputStream(new FileOutputStream("d:/txt/usuario.txt",true));
-        if (txtNombre.getText().equals("") || txtApellidos.getText().equals("") || txtDireccion.getText().equals("")
-                || txtCiudad.getText().equals("") || txtEstado.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "Campos vacios","ERROR",JOptionPane.ERROR_MESSAGE);
+        fileOut = new DataOutputStream(new FileOutputStream("d:/txt/usuario.bin",true));
+        m = p.matcher(txtNombre.getText());
+        if (m.find()) {
+            m = p.matcher(txtApellidos.getText());
+            if (m.find()) {
+                Pattern d = Pattern.compile("^[A-Z][a-z]+");
+                Matcher dir;
+                dir = d.matcher(txtDireccion.getText());
+                if (dir.find()) {
+                    m = p.matcher(txtCiudad.getText());
+                    if (m.find()) {
+                        m = p.matcher(txtEstado.getText());
+                        if (m.find()) {
+                            Pattern t = Pattern.compile("[0-9]{10,10}");
+                            Matcher tel;
+                            tel = t.matcher(txtTelefono.getText());
+                            if (tel.find()) {
+                                u.setIdUsuario(u.getIdUsuario()+1);
+                                u.setNombre(txtNombre.getText());
+                                u.setApellido(txtApellidos.getText());
+                                u.setDireccion(txtDireccion.getText());
+                                u.setTelefono(Double.parseDouble(txtTelefono.getText()));
+                                u.setCargo_bancario(cboCargo.getSelectedItem().toString());
+                                u.setCiudad(txtCiudad.getText());
+                                u.setEstado(txtEstado.getText());
+                                u.setPais(cboPais.getSelectedItem().toString());
+                                if(optM.isSelected()){
+                                    u.setSexo("M");
+                                }
+                                else if(optF.isSelected()){
+                                    u.setSexo("F");
+                                }
+                                fileOut.writeDouble(u.getIdUsuario());
+                                fileOut.writeUTF(u.getNombre());
+                                fileOut.writeUTF(u.getApellido());
+                                fileOut.writeUTF(u.getDireccion());
+                                fileOut.writeDouble(u.getTelefono());
+                                fileOut.writeUTF(u.getCargo_bancario());
+                                fileOut.writeUTF(u.getCiudad());
+                                fileOut.writeUTF(u.getEstado());
+                                fileOut.writeUTF(u.getPais());
+                                fileOut.writeUTF(u.getSexo());
+                                fileOut.close();
+                                JOptionPane.showMessageDialog(null, "Agregado con exito");
+                                MenuGerente mg = new MenuGerente();
+                                mg.setVisible(true);
+                                this.setVisible(false);
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Error en el Telefono", "ERROR", JOptionPane.ERROR_MESSAGE);
+                            }
+                            
+                        } else{
+                            JOptionPane.showMessageDialog(null, "Error en el Estado", "ERROR", JOptionPane.ERROR_MESSAGE);
+                        }
+                    } else{
+                        JOptionPane.showMessageDialog(null, "Error en la Ciudad", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error en la Direccion", "ERROR", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Error en el Apellido", "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
         } else {
-            u.setIdUsuario(u.getIdUsuario()+1);
-            u.setNombre(txtNombre.getText());
-            u.setApellido(txtApellidos.getText());
-            u.setDireccion(txtDireccion.getText());
-            u.setTelefono(Double.parseDouble(txtTelefono.getText()));
-            u.setCargo_bancario(cboCargo.getSelectedItem().toString());
-            u.setCiudad(txtCiudad.getText());
-            u.setEstado(txtEstado.getText());
-            u.setPais(cboPais.getSelectedItem().toString());
-            if(optM.isSelected()){
-                u.setSexo("M");
-            }
-            else if(optF.isSelected()){
-                u.setSexo("F");
-            }
-            fileOut.writeDouble(u.getIdUsuario());
-            fileOut.writeUTF(u.getNombre());
-            fileOut.writeUTF(u.getApellido());
-            fileOut.writeUTF(u.getDireccion());
-            fileOut.writeDouble(u.getTelefono());
-            fileOut.writeUTF(u.getCargo_bancario());
-            fileOut.writeUTF(u.getCiudad());
-            fileOut.writeUTF(u.getEstado());
-            fileOut.writeUTF(u.getPais());
-            fileOut.writeUTF(u.getSexo());
-            fileOut.close();
-            JOptionPane.showMessageDialog(null, "Agregado con exito");
-            MenuGerente mg = new MenuGerente();
-            mg.setVisible(true);
-            this.setVisible(false);
-        }
+            JOptionPane.showMessageDialog(null, "Error en el Nombre", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }  
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -141,6 +168,7 @@ public class AgregarUsuario extends javax.swing.JFrame {
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Sexo"));
 
         optSexo.add(optM);
+        optM.setSelected(true);
         optM.setText("M");
 
         optSexo.add(optF);
@@ -322,16 +350,10 @@ public class AgregarUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        if ( getCargo() == 1 ) {
-            MenuGerente mg = new MenuGerente();
-            mg.setVisible(true);
-            this.setVisible(false);
-        }
-        else if ( getCargo() == 0) {
-            MenuCajero mc = new MenuCajero();
-            mc.setVisible(true);
-            this.setVisible(false);
-        }
+
+        MenuGerente mg = new MenuGerente();
+        mg.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     /**

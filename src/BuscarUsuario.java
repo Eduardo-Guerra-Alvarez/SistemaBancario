@@ -25,7 +25,7 @@ public class BuscarUsuario extends javax.swing.JFrame {
         return cargo;
     }
     public void Buscar(double id) throws FileNotFoundException, IOException{
-        fileIn = new DataInputStream(new FileInputStream("d:/txt/usuario.txt"));
+        fileIn = new DataInputStream(new FileInputStream("d:/txt/usuario.bin"));
         encontrado = false;
         while(true){
             u.setIdUsuario(fileIn.readDouble());

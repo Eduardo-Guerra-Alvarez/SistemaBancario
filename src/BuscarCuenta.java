@@ -15,7 +15,7 @@ public class BuscarCuenta extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
     }
     public void Buscar(double id) throws FileNotFoundException, IOException{
-        fileIn = new DataInputStream(new FileInputStream("d:/txt/cuenta.txt"));
+        fileIn = new DataInputStream(new FileInputStream("d:/txt/cuenta.bin"));
         encontrado = false;
         String fechaA, fechaM;
         while(true){
@@ -39,8 +39,8 @@ public class BuscarCuenta extends javax.swing.JFrame {
                 fechaA = c.getDia()+"/"+c.getMes()+"/"+c.getAnio();
                 fechaM = c.getDiaM()+"/"+c.getMesM()+"/"+c.getAnioM();
                 txtFechaA.setText(fechaA);
-                txtFechaM.setText(fechaM);
-                cboTipo.setSelectedItem(c.getTipo_cuenta());
+                txtFechaM1.setText(fechaM);
+                txtTipo.setText(c.getTipo_cuenta());
                 encontrado = true;
             }
             
@@ -58,7 +58,6 @@ public class BuscarCuenta extends javax.swing.JFrame {
 
         jLabel9 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        cboTipo = new javax.swing.JComboBox<>();
         btnRegresar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
@@ -71,16 +70,15 @@ public class BuscarCuenta extends javax.swing.JFrame {
         txtIDUs = new javax.swing.JLabel();
         txtFechaA = new javax.swing.JLabel();
         txtIDCli = new javax.swing.JLabel();
-        txtFechaM = new javax.swing.JLabel();
+        txtTipo = new javax.swing.JLabel();
         txtSaldo = new javax.swing.JLabel();
+        txtFechaM1 = new javax.swing.JLabel();
 
         jLabel9.setText("jLabel9");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel4.setText("Tipo de Cuenta");
-
-        cboTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ahorro", "Credito" }));
 
         btnRegresar.setText("Regresar");
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {
@@ -114,9 +112,11 @@ public class BuscarCuenta extends javax.swing.JFrame {
 
         txtIDCli.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        txtFechaM.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        txtTipo.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         txtSaldo.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        txtFechaM1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -147,21 +147,22 @@ public class BuscarCuenta extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(txtIDUs, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtIDCli, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel6)
                                     .addComponent(jLabel5))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtFechaM, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtFechaA, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(txtFechaA, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtFechaM1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(26, 26, 26)
+                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGap(18, 18, 18)
+                                .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -190,15 +191,15 @@ public class BuscarCuenta extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addComponent(txtIDUs, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
-                    .addComponent(txtFechaM, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
+                    .addComponent(txtFechaM1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel4)
-                        .addComponent(cboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel2)
-                        .addComponent(txtSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel4)
+                        .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnRegresar)
                 .addContainerGap(12, Short.MAX_VALUE))
@@ -271,7 +272,6 @@ public class BuscarCuenta extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnRegresar;
-    private javax.swing.JComboBox<String> cboTipo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
@@ -281,10 +281,11 @@ public class BuscarCuenta extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel txtFechaA;
-    private javax.swing.JLabel txtFechaM;
+    private javax.swing.JLabel txtFechaM1;
     private javax.swing.JLabel txtIDCli;
     private javax.swing.JTextField txtIDCu;
     private javax.swing.JLabel txtIDUs;
     private javax.swing.JLabel txtSaldo;
+    private javax.swing.JLabel txtTipo;
     // End of variables declaration//GEN-END:variables
 }

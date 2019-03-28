@@ -13,6 +13,7 @@ public class Deposito extends javax.swing.JFrame {
     DataInputStream fileIn = null;
     DataOutputStream fileOut = null;
     boolean encontrado = false;
+    boolean aceptado;
     int cargo;
     
     public Deposito() {
@@ -21,9 +22,10 @@ public class Deposito extends javax.swing.JFrame {
     }
     
     public void Deposito(double id) throws FileNotFoundException, IOException{
-        fileIn = new DataInputStream(new FileInputStream("d:/txt/cuenta.txt"));
+        fileIn = new DataInputStream(new FileInputStream("d:/txt/cuenta.bin"));
         ArrayList<Cuentas> lista = new ArrayList();
         encontrado = false;
+        aceptado = false;
         try{
             while(true){
                 Cuentas cli = new Cuentas();
@@ -56,12 +58,21 @@ public class Deposito extends javax.swing.JFrame {
                 temp.setDiaM(Integer.parseInt(txtDia.getText()));
                 temp.setMesM(Integer.parseInt(txtMes.getText()));
                 temp.setAnioM(Integer.parseInt(txtAnio.getText()));
+                if (temp.getDia() <= 31 && temp.getMes() <= 12 && (temp.getAnio() < 2030 && temp.getAnio() >= 2019)) {
+                    if (temp.getMes() == 2 && temp.getDia() >= 28) {
+                        JOptionPane.showMessageDialog(this, "Febrero tiene 28 dias","ERROR",JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        aceptado = true;
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Formato de fecha incorrecto");
+                }
                 encontrado = true;
             }
         }
-        if(encontrado == true){
+        if(encontrado == true && aceptado == true){
             Cuentas aux = new Cuentas();
-            fileOut = new DataOutputStream(new FileOutputStream("d:/txt/cuenta.txt"));
+            fileOut = new DataOutputStream(new FileOutputStream("d:/txt/cuenta.bin"));
             for (int i = 0; i < lista.size(); i++) {
                 aux = lista.get(i);
                
@@ -82,9 +93,10 @@ public class Deposito extends javax.swing.JFrame {
         }
     }
     public void Retiro(double id) throws FileNotFoundException, IOException{
-        fileIn = new DataInputStream(new FileInputStream("d:/txt/cuenta.txt"));
+        fileIn = new DataInputStream(new FileInputStream("d:/txt/cuenta.bin"));
         ArrayList<Cuentas> lista = new ArrayList();
         encontrado = false;
+        aceptado = false;
         try{
             while(true){
                 Cuentas cli = new Cuentas();
@@ -117,11 +129,20 @@ public class Deposito extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(this, "Saldo Insuficiente","ERROR",JOptionPane.ERROR_MESSAGE);
                     }
                     else {
-                        temp.setSaldo_actual(temp.getSaldo_actual()-monto);
-                        temp.setDiaM(Integer.parseInt(txtDia.getText()));
-                        temp.setMesM(Integer.parseInt(txtMes.getText()));
-                        temp.setAnioM(Integer.parseInt(txtAnio.getText()));
-                        txtMonto.setText(String.valueOf(String.format("%.0f", temp.getSaldo_actual())));
+                        if (temp.getDia() <= 31 && temp.getMes() <= 12 && (temp.getAnio() < 2030 && temp.getAnio() >= 2019)) {
+                            if (temp.getMes() == 2 && temp.getDia() >= 28) {
+                                JOptionPane.showMessageDialog(this, "Febrero tiene 28 dias","ERROR",JOptionPane.ERROR_MESSAGE);
+                            } else {
+                                temp.setSaldo_actual(temp.getSaldo_actual()-monto);
+                                temp.setDiaM(Integer.parseInt(txtDia.getText()));
+                                temp.setMesM(Integer.parseInt(txtMes.getText()));
+                                temp.setAnioM(Integer.parseInt(txtAnio.getText()));
+                                txtMonto.setText(String.valueOf(String.format("%.0f", temp.getSaldo_actual())));
+                                aceptado = true;
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Formato de fecha incorrecto");
+                        }
                     }
                 }
                 else {
@@ -130,9 +151,9 @@ public class Deposito extends javax.swing.JFrame {
                 encontrado = true;
             }
         }
-        if(encontrado == true){
+        if(encontrado == true && aceptado == true){
             Cuentas aux = new Cuentas();
-            fileOut = new DataOutputStream(new FileOutputStream("d:/txt/cuenta.txt"));
+            fileOut = new DataOutputStream(new FileOutputStream("d:/txt/cuenta.bin"));
             for (int i = 0; i < lista.size(); i++) {
                 aux = lista.get(i);
                
@@ -258,13 +279,9 @@ public class Deposito extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(btnDepositar)
-                                    .addGap(56, 56, 56)
-                                    .addComponent(btnRetirar))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addComponent(jLabel2)
@@ -272,9 +289,15 @@ public class Deposito extends javax.swing.JFrame {
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(txtIDCue, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                        .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(11, 11, 11)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(39, 39, 39)
+                                .addComponent(btnDepositar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnRetirar))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(95, 95, 95)
+                        .addGap(91, 91, 91)
                         .addComponent(btnRegresar)))
                 .addContainerGap(44, Short.MAX_VALUE))
         );
@@ -292,12 +315,12 @@ public class Deposito extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnRetirar)
                     .addComponent(btnDepositar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnRegresar)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         pack();
